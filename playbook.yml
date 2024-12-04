@@ -1,0 +1,8 @@
+---
+- name: Print Vault Secret
+  hosts: localhost
+  tasks:
+    - name: Look up secret from Vault
+      ansible.builtin.debug:
+        msg: >
+          Secret: ""
