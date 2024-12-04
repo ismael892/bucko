@@ -5,4 +5,4 @@
     - name: Look up secret from Vault
       ansible.builtin.debug:
         msg: >
-          Secret: "{{lookup('hashi_vault', 'secret=/v1/kv/data/awx')}}"
+          Secret: "{{lookup('hashi_vault', 'secret=/kv/awx')}}"
