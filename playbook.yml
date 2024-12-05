@@ -1,8 +1,15 @@
 ---
-- name: Print Vault Secret
+- name: Leer secreto desde Vault CLI
   hosts: localhost
   tasks:
-    - name: Look up secret from Vault
-      ansible.builtin.debug:
+    - name: Acceder al secreto de Vault
+      command: >
+        vault kv get -format=json -mount="kv" "awx"
+      register: vault_output
+      environment:
+        VAULT_ADDR: "http://48.217.48.214:31200"
+        VAULT_TOKEN: "hvs.mdJ8aEAsJPCiserJNBCtgc56"
+    - name: Mostrar el secreto extraído
+      debug:
         msg: >
-          Secret: "{{lookup('hashi_vault', 'secret=/kv/awx url=http://48.217.48.214:31200')}}"
+          Valor del secreto: {{ (vault_output.stdout | from_json) }}
