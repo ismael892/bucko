@@ -4,9 +4,7 @@
   tasks:
     - name: Ejecutar comando para obtener secreto desde Vault
       ansible.builtin.shell: |
-        export VAULT_ADDR="http://48.217.48.214:31200"
-        export VAULT_TOKEN="hvs.mdJ8aEAsJPCiserJNBCtgc56"
-        vault kv get -format=json -mount="kv" "awx"
+        echo "los comandos funcionan, parece ser"
       register: vault_command_output
 
     - name: Mostrar salida del comando ejecutado
