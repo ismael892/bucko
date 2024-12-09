@@ -1,6 +1,7 @@
 ---
 - name: Playbook para interactuar con Vault
   hosts: localhost
+  gather_facts: false
   tasks:
     - name: Ejecutar comando para obtener secreto desde Vault
       ansible.builtin.debug:
