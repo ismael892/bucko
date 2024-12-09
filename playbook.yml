@@ -3,10 +3,4 @@
   hosts: localhost
   tasks:
     - name: Ejecutar comando para obtener secreto desde Vault
-      ansible.builtin.shell: |
-        echo "los comandos funcionan, parece ser"
-      register: vault_command_output
-
-    - name: Mostrar salida del comando ejecutado
-      ansible.builtin.debug:
-        var: vault_command_output.stdout
+      command: echo "works"
