@@ -2,18 +2,11 @@
 - name: Playbook para interactuar con Vault
   hosts: all
   tasks:
-    - name: Establecer variables de entorno para Vault
-      ansible.builtin.set_fact:
-        env_vars:
-          VAULT_ADDR: "http://48.217.48.214:31200"
-          VAULT_TOKEN: "hvs.mdJ8aEAsJPCiserJNBCtgc56"
-
     - name: Ejecutar comando para obtener secreto desde Vault
       ansible.builtin.shell: |
-        export VAULT_ADDR="{{ env_vars.VAULT_ADDR }}"
-        export VAULT_TOKEN="{{ env_vars.VAULT_TOKEN }}"
+        export VAULT_ADDR="http://48.217.48.214:31200"
+        export VAULT_TOKEN="hvs.mdJ8aEAsJPCiserJNBCtgc56"
         vault kv get -format=json -mount="kv" "awx"
-      environment: "{{ env_vars }}"
       register: vault_command_output
 
     - name: Mostrar salida del comando ejecutado
