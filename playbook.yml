@@ -1,15 +1,21 @@
 ---
-- name: Leer secreto desde Vault CLI
-  hosts: localhost
+- name: Playbook para interactuar con Vault
+  hosts: all
   tasks:
-    - name: Acceder al secreto de Vault
-      command: >
+    - name: Establecer variables de entorno para Vault
+      ansible.builtin.set_fact:
+        env_vars:
+          VAULT_ADDR: "http://48.217.48.214:31200"
+          VAULT_TOKEN: "hvs.mdJ8aEAsJPCiserJNBCtgc56"
+
+    - name: Ejecutar comando para obtener secreto desde Vault
+      ansible.builtin.shell: |
+        export VAULT_ADDR="{{ env_vars.VAULT_ADDR }}"
+        export VAULT_TOKEN="{{ env_vars.VAULT_TOKEN }}"
         vault kv get -format=json -mount="kv" "awx"
-      register: vault_output
-      environment:
-        VAULT_ADDR: "http://48.217.48.214:31200"
-        VAULT_TOKEN: "hvs.mdJ8aEAsJPCiserJNBCtgc56"
-    - name: Mostrar el secreto extraído
-      debug:
-        msg: >
-          Valor del secreto: {{ (vault_output.stdout | from_json) }}
+      environment: "{{ env_vars }}"
+      register: vault_command_output
+
+    - name: Mostrar salida del comando ejecutado
+      ansible.builtin.debug:
+        var: vault_command_output.stdout
