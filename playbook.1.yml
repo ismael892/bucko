@@ -9,6 +9,12 @@
         vault kv get -format=json -mount="kv" "awx"
       register: vault_command_output
 
-    - name: Mostrar salida del comando ejecutado
+    - name: Parsear salida JSON de Vault
+      ansible.builtin.set_fact:
+        vault_data: "{{ vault_command_output.stdout | from_json | json_query('data.data') }}"
+
+    - name: Mostrar claves y valores
       ansible.builtin.debug:
-        var: vault_command_output
+        msg: "{{ item.key }}: {{ item.value }}"
+      with_dict: "{{ vault_data }}"
+
