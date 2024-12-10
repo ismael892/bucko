@@ -1,0 +1,22 @@
+---
+- name: Autenticación en Vault mediante Userpass
+  hosts: localhost
+  tasks:
+    - name: Autenticarse en Vault usando Userpass
+      ansible.builtin.shell: |
+        vault login -method=userpass username="demo_user" password="secure_password" -format=json
+      register: vault_login_output
+
+    - name: Guardar el token de autenticación
+      ansible.builtin.set_fact:
+        vault_token: "{{ vault_login_output.stdout | from_json | json_query('auth.client_token') }}"
+
+    - name: Obtener secreto desde Vault
+      ansible.builtin.shell: |
+        export VAULT_TOKEN="{{ vault_token }}"
+        vault kv get -format=json -mount="kv" "awx"
+      register: vault_command_output
+
+    - name: Parsear y mostrar claves/valores del secreto
+      ansible.builtin.set_fact:
+        vault_data: "{{ vault_command_output.stdout | from_json | json_query('data.data') }}"
