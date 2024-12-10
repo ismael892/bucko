@@ -4,7 +4,7 @@
   tasks:
     - name: Autenticarse en Vault usando Userpass
       ansible.builtin.shell: |
-        vault login -method=userpass username="demo_user" password="secure_password" -format=json
+        vault login -method=userpass username=$VAULT_USER password=$VAULT_PASS -format=json
       register: vault_login_output
 
     - name: Guardar el token de autenticación
