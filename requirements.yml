@@ -1,4 +1,4 @@
 ---
 collections:
   - name: community.general
-  - name: ara
+  - name: arecordsansible.ara
