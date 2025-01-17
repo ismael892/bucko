@@ -15,4 +15,3 @@
       ansible.builtin.debug:
         msg: "{{ item.key }}: {{ item.value }}"
       with_dict: "{{ vault_data }}"
-
