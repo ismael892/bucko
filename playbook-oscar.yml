@@ -9,3 +9,19 @@
     - name: Mostrar mensaje "Hello, World"
       debug:
         var: command_output
+       
+    - name: "ID"
+      shell: ls -lh /usr/lib/python3.11/site-packages/ansible_runner/__main__.py
+      register: command_output_main
+ 
+    - name: Mostrar mensaje "Hello, World"
+      debug:
+        var: command_output_main
+ 
+    - name: "ID"
+      shell: ls -lh /runner
+      register: command_output_runner
+ 
+    - name: Mostrar mensaje "Hello, World"
+      debug:
+        var: command_output_runner
