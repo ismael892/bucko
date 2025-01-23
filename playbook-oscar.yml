@@ -5,22 +5,25 @@
     - name: "ID"
       shell: id
       register: command_output
+      ignore_errors: True
  
     - name: Mostrar mensaje "Hello, World"
       debug:
         var: command_output
-       
-    - name: "ID"
+ 
+    - name: "main"
       shell: ls -lh /usr/lib/python3.11/site-packages/ansible_runner/__main__.py
       register: command_output_main
+      ignore_errors: True
  
     - name: Mostrar mensaje "Hello, World"
       debug:
         var: command_output_main
  
-    - name: "ID"
+    - name: "runner"
       shell: ls -lh /runner
       register: command_output_runner
+      ignore_errors: True
  
     - name: Mostrar mensaje "Hello, World"
       debug:
