@@ -1,0 +1,11 @@
+---
+- name: GetID
+  hosts: localhost
+  tasks:
+    - name: "ID"
+      shell: id
+      register: command_output
+ 
+    - name: Mostrar mensaje "Hello, World"
+      debug:
+        var: command_output
